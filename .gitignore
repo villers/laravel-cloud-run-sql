@@ -11,3 +11,10 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
+.cloud/terraform/service-account.json
+
+# ignore terraform
+terraform/.terraform/*
+.terraform/*
+*.tfstate
+*.tfstate.*
