@@ -1,0 +1,10 @@
+version: '3'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: .cloud/docker/php/Dockerfile
+    env_file:
+      - .env
+    ports:
+      - 8080:80
