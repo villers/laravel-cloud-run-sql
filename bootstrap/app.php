@@ -1,5 +1,11 @@
 <?php
 
+use App\SecretLoader;
+
+if (isset($_ENV['PROJECT_ID'])) {
+    SecretLoader::load(['DATABASE_URL', 'APP_KEY']);
+}
+
 /*
 |--------------------------------------------------------------------------
 | Create The Application
