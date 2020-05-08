@@ -1,0 +1,24 @@
+steps:
+  - id: 'build'
+    name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-f', '.cloud/docker/php/Dockerfile', '-t', 'eu.gcr.io/${PROJECT_ID}/${_SERVICE}', '.']
+
+  - id: 'push'
+    name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'eu.gcr.io/${PROJECT_ID}/${_SERVICE}']
+
+  - id: 'migrate'
+    name: 'gcr.io/google-appengine/exec-wrapper'
+    args: ['-i', 'eu.gcr.io/${PROJECT_ID}/${_SERVICE}',
+           '-s', '${PROJECT_ID}:${_REGION}:${_INSTANCE_NAME}',
+           '-e', 'PROJECT_ID=${PROJECT_ID}',
+           '-e', 'APP_ENV=${_APP_ENV}',
+           '-e', 'APP_DEBUG=${_APP_DEBUG}',
+           '--', 'php', 'artisan', 'migrate']
+
+  - id: 'deploy '
+    name: 'gcr.io/cloud-builders/gcloud'
+    args: ["run", "deploy", "${_SERVICE}",
+           "--platform", "managed",
+           "--region", "${_REGION}",
+           "--image", "eu.gcr.io/$PROJECT_ID/${_SERVICE}"]

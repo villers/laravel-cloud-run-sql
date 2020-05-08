@@ -33,6 +33,12 @@ gcloud auth application-default login
  terraform apply -var 'region=europe-west1' -var 'service=laravel-sandbox' -var 'project=cloud-run-as-code'  -var 'instance_name=laravel-sandbox4'
 ```
 
+## Redeploy app
+
+```shell
+gcloud builds submit --project cloud-run-as-code --config .cloudbuild/build-migrate-deploy.yaml --substitutions _APP_ENV=dev,_APP_DEBUG=true,_SERVICE=laravel-sandbox,_REGION=europe-west1,_INSTANCE_NAME=laravel-sandbox4
+```
+
 ## Destroy infra
 
 ```shell
