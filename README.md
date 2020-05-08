@@ -6,7 +6,7 @@
 cd .cloud/terraform
 
 # Configure project
-$ export PROJECT_ID=cloud-run-as-code
+$ export PROJECT_ID=laravel-as-code
 
 # Create the service account
 gcloud iam service-accounts create deployer --project ${PROJECT_ID}
