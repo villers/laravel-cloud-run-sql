@@ -94,6 +94,14 @@
                     <a href="https://vapor.laravel.com">Vapor</a>
                     <a href="https://github.com/laravel/laravel">GitHub</a>
                 </div>
+
+                <div class="users">
+                    <ul>
+                        @foreach($users as $user)
+                            {{$user->name}}
+                        @endforeach
+                    </ul>
+                </div>
             </div>
         </div>
     </body>
