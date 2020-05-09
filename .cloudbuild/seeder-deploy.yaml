@@ -1,0 +1,9 @@
+steps:
+  - id: 'migrate'
+    name: 'gcr.io/google-appengine/exec-wrapper'
+    args: ['-i', 'eu.gcr.io/${PROJECT_ID}/${_SERVICE}',
+           '-s', '${PROJECT_ID}:${_REGION}:${_INSTANCE_NAME}',
+           '-e', 'PROJECT_ID=${PROJECT_ID}',
+           '-e', 'APP_ENV=${_APP_ENV}',
+           '-e', 'APP_DEBUG=${_APP_DEBUG}',
+           '--', 'php', 'artisan', 'migrate:refresh', '--seed']
