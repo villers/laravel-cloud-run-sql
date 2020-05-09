@@ -1,46 +1,23 @@
 # Deploy laravel to cloud run
 
-## Create service account
+Let's build a demo application, using Google Cloud components and laravel
 
-```shell
-cd .cloud/terraform
+App uses:
 
-# Configure project
-$ export PROJECT_ID=laravel-as-code
+ * [Laravel 7.x](https://laravel.com/docs/7.x/installation) as the web framework
+ * [Google Cloud Run](https://cloud.google.com/run/) as the hosting platform
+ * [Google Cloud SQL](https://cloud.google.com/sql/) as the managed database
+ * [Google Cloud Build](https://cloud.google.com/cloud-build/) for build and deployment automation
+ * [Google Secret Manager](https://cloud.google.com/secret-manager/) for managing encrypted values
 
-# Create the service account
-gcloud iam service-accounts create deployer --project ${PROJECT_ID}
+*This repo serves as a proof of concept of showing how you can piece all the above technologies together into a working project.*
 
-# Grant editor permissions (lower than roles/owner)
-gcloud projects add-iam-policy-binding cloud-run-as-code --member "serviceAccount:deployer@${PROJECT_ID}.iam.gserviceaccount.com" --role "roles/owner"
+## Steps
 
-# create and save a local private key
-gcloud iam service-accounts keys create service-account.json --iam-account deployer@${PROJECT_ID}.iam.gserviceaccount.com
+[Try the application locally](docs/00-test-local.md) *optional*
 
-# store location of private key in environment that terraform can use
-export GOOGLE_CREDENTIALS=$(cat service-account.json)
-```
+Manual deployment:
 
-## Without service account
-
-```shell
-gcloud auth application-default login
-```
-
-## Deploy infra
-
-```shell
- terraform apply -var 'region=europe-west1' -var 'service=laravel-sandbox' -var 'project=cloud-run-as-code'  -var 'instance_name=laravel-sandbox4'
-```
-
-## Redeploy app
-
-```shell
-gcloud builds submit --project cloud-run-as-code --config .cloudbuild/build-migrate-deploy.yaml --substitutions _APP_ENV=dev,_APP_DEBUG=true,_SERVICE=laravel-sandbox,_REGION=europe-west1,_INSTANCE_NAME=laravel-sandbox4
-```
-
-## Destroy infra
-
-```shell
- terraform destroy -var 'region=europe-west1' -var 'service=laravel-sandbox' -var 'project=cloud-run-as-code'  -var 'instance_name=laravel-sandbox4'
-```
+1. [Setup Google Cloud Platform environment](docs/10-setup-gcp.md)
+2. [Deploy with Terraform](docs/20-deloyment.md)
+3. [Cleanup your project resources](docs/30-cleanup.md)
