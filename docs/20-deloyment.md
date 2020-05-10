@@ -88,7 +88,7 @@ terraform apply \
 gcloud builds submit \
   --project cloud-run-as-code \
   --config .cloudbuild/build-migrate-deploy.yaml \
-  --substitutions _APP_ENV=pod,_APP_DEBUG=false,_SERVICE=${SERVICE_NAME},_REGION=${REGION},_INSTANCE_NAME=${SERVICE_NAME}
+  --substitutions _APP_ENV=prod,_APP_DEBUG=false,_SERVICE=${SERVICE_NAME},_REGION=${REGION},_INSTANCE_NAME=${SERVICE_NAME}
 ```
 
 ### Run your seeder
@@ -97,7 +97,7 @@ gcloud builds submit \
 gcloud builds submit \
   --project cloud-run-as-code \
   --config .cloudbuild/seeder-deploy.yaml \
-  --substitutions _APP_ENV=pod,_APP_DEBUG=false,_SERVICE=${SERVICE_NAME},_REGION=${REGION},_INSTANCE_NAME=${SERVICE_NAME}
+  --substitutions _APP_ENV=prod,_APP_DEBUG=false,_SERVICE=${SERVICE_NAME},_REGION=${REGION},_INSTANCE_NAME=${SERVICE_NAME}
 ```
 
 Next step: 3. [Cleanup your project resources](30-cleanup.md)
