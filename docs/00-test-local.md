@@ -32,6 +32,15 @@ Before we can use our image, we have to build it. The database image will be pul
 docker-compose build
 ``` 
 
+## Install composer
+ 
+Before we can intialise the database, we need to install the composer vendors: 
+
+```
+composer install
+``` 
+
+- Be sure the composer and php is installed in your system. (not in the docker)
 
 ## Initialise the database
 
