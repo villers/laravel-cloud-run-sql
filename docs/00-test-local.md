@@ -40,6 +40,14 @@ Before we can intialise the database, we need to install the composer vendors:
 composer install
 ``` 
 
+## Start the services
+
+Now we have a database, and a build web image, we can start them: 
+
+```
+docker-compose up
+``` 
+
 - Be sure the composer and php is installed in your system. (not in the docker)
 
 ## Initialise the database
@@ -50,13 +58,6 @@ At the moment the database is empty. We can use standard django commands to run 
 docker-compose run --rm app php artisan migrate --seed
 ```
 
-## Start the services
-
-Now we have a database, and a build web image, we can start them: 
-
-```
-docker-compose up
-``` 
 
 You can now see app running in your browser at [http://localhost:8080/](http://localhost:8080/)
 
