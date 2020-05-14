@@ -1,6 +1,6 @@
 variable project {
   type        = string
-  description = "The Google Cloud Platform project name"
+  description = "The Google Cloud Platform project id"
 }
 
 variable service {

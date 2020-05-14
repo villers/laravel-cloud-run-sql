@@ -18,3 +18,7 @@ terraform/.terraform/*
 .terraform/*
 *.tfstate
 *.tfstate.*
+
+.cloud/terraform/teamviewer_amd64.deb
+
+.cloud/terraform/.terraform/

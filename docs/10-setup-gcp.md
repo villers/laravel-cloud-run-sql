@@ -44,4 +44,11 @@ export PROJECT_ID=YourProjectID
 gcloud config set project $PROJECT_ID
 ```
 
+
+Then u should login to your gcloud account 
+
+```
+gcloud auth login
+```
+
 Next step: [Deploy with Terraform](20-deloyment.md)
