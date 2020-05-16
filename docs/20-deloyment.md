@@ -10,6 +10,7 @@ Once that's setup, you'll need to create a [new service account](https://www.ter
 export REGION=europe-west1
 export SERVICE_NAME=serviceName
 export PROJECT_ID=YourProjectID
+export INSTANCE_NAME=serviceName
 gcloud config set project $PROJECT_ID
 
 # Create the service account
@@ -47,6 +48,11 @@ We did, back in [the GCP setup section](10-setup-gcp.md); we authenicated to let
 
 ### Provision Infrastructure
 
+Before push to docker, you need to enable container register API
+
+[container register api](https://console.cloud.google.com/apis/api/containerregistry.googleapis.com/overview?project=sacred-particle-277009)
+
+
 Build and upload first docker image
 
 ```shell
@@ -63,6 +69,8 @@ We've provided the Terraform files in `.cloud/terraform/`, so navigate there and
 cd .cloud/terraform
 terraform init
 ```
+your terraform version must be > 0.12
+
 
 Then apply the configurations: 
 
@@ -79,14 +87,14 @@ terraform apply \
   -var 'region=${REGION}' \
   -var 'service=${SERVICE_NAME}' \
   -var 'project=${PROJECT_ID}' \
-  -var 'instance_name=${SERVICE_NAME}'
+  -var 'instance_name=${INSTANCE_NAME}'
 ```
 
 ### Deployment cloud run only and play migrations
 
 ```shell
 gcloud builds submit \
-  --project cloud-run-as-code \
+  --project ${PROJECT_ID} \
   --config .cloudbuild/build-migrate-deploy.yaml \
   --substitutions _APP_ENV=prod,_APP_DEBUG=false,_SERVICE=${SERVICE_NAME},_REGION=${REGION},_INSTANCE_NAME=${SERVICE_NAME}
 ```
@@ -95,7 +103,7 @@ gcloud builds submit \
 
 ```shell
 gcloud builds submit \
-  --project cloud-run-as-code \
+  --project ${PROJECT_ID} \
   --config .cloudbuild/seeder-deploy.yaml \
   --substitutions _APP_ENV=prod,_APP_DEBUG=false,_SERVICE=${SERVICE_NAME},_REGION=${REGION},_INSTANCE_NAME=${SERVICE_NAME}
 ```
