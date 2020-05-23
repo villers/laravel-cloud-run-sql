@@ -5,8 +5,26 @@ sed -i "s/:80>/:${PORT}>/g" /etc/apache2/sites-available/000-default.conf
 sed -i "s/Listen 80$/Listen ${PORT}/g" /etc/apache2/ports.conf
 
 # first arg is `-f` or `--some-option`
+if [ "${1#-}" != "$1" ]; then
+	set -- apache2-foreground "$@"
+fi
+
+if [ "$1" = 'apache2-foreground' ] || [ "$1" = 'php' ]; then
+	PHP_INI_RECOMMENDED="$PHP_INI_DIR/php.ini-production"
+	if [ "$APP_ENV" != 'prod' ]; then
+		PHP_INI_RECOMMENDED="$PHP_INI_DIR/php.ini-development"
+	fi
+	ln -sf "$PHP_INI_RECOMMENDED" "$PHP_INI_DIR/php.ini"
+
+	chmod -R 777 storage
+
+	if [ "$APP_ENV" != 'prod' ]; then
+		composer install --prefer-dist --no-progress --no-suggest --no-interaction
+	fi
+fi
+
 if [ "apache2-foreground" != "$1" ]; then
-	exec $@
+    exec $@
 fi
 
 exec "apache2-foreground"
