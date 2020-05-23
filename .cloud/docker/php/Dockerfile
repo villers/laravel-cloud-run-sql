@@ -23,8 +23,12 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
+RUN pecl install apcu-5.1.18; \
+    pecl clear-cache;
+
 # Install PHP extensions
 RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd opcache
+RUN docker-php-ext-enable apcu
 
 # Get latest Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer

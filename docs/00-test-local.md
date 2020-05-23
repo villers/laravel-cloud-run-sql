@@ -30,15 +30,7 @@ Before we can use our image, we have to build it. The database image will be pul
 
 ```
 docker-compose build
-``` 
-
-## Install composer
- 
-Before we can intialise the database, we need to install the composer vendors: 
-
 ```
-composer install
-``` 
 
 ## Start the services
 
