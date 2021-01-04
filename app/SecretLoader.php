@@ -19,7 +19,7 @@ class SecretLoader
             }
 
             try {
-                $secret = $client::secretVersionName($_ENV['PROJECT_ID'], $name, 'latest');
+                $secret = $client::secretVersionName(getenv('PROJECT_ID'), $name, 'latest');
                 $response = $client->accessSecretVersion($secret);
                 $payload = $response->getPayload();
 
